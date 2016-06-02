@@ -37,6 +37,8 @@ class PuppetOmnibus < FPM::Cookery::Recipe
                    puppetmaster-passenger puppetmaster-common })
   end
 
+  depends "libssl1.0.0"
+
   def build
   end
 
@@ -112,4 +114,3 @@ exit 0
     end
   end
 end
-
