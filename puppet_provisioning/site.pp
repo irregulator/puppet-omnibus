@@ -5,7 +5,7 @@ node "precise" {
 
   exec {"apt-get update":} ->
   package {"git": ensure => installed} ->
-  exec {"gem install /vagrant/vendor/bundler-1.6.3.gem":} ->
+  exec {"gem install /vagrant/vendor/bundler-1.12.5.gem":} ->
   exec {"bundle install --local": cwd => "/vagrant", user => "vagrant"}
 
   file {"/tmp/build": ensure => directory, purge => true} ->
