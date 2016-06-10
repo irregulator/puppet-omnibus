@@ -15,8 +15,8 @@ class Rocker
 
   # special case:
   # strip lines in single run block and join them together
-  def run(command)
-    puts "RUN " << command.lines.to_a.map(&:strip).reject{|s| s==''}.join("; ")
+  def run(command, separator = ';')
+    puts "RUN " << command.lines.to_a.map(&:strip).reject{|s| s==''}.join(" #{separator} ")
   end
 
   def method_missing(method, *args)
