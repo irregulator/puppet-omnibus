@@ -25,8 +25,6 @@
 #           note the spaces here ---'
 
 OS_SOURCES = {
-  'centos5' => 'docker-dev.yelpcorp.com/centos5_yelp:latest',
-  'centos6' => 'docker-dev.yelpcorp.com/centos6_yelp:latest',
   'lucid'   => 'docker-dev.yelpcorp.com/lucid_yelp:latest',
   'precise' => 'docker-dev.yelpcorp.com/precise_yelp:latest',
   'trusty'  => 'docker-dev.yelpcorp.com/trusty_yelp:latest',
@@ -34,23 +32,6 @@ OS_SOURCES = {
 }
 
 from OS_SOURCES[env_os]
-env "DEBIAN_FRONTEND=noninteractive"
-# packages
-
-rpm_packages = %w{
-  bison fakeroot gcc-c++ gdbm-devel gnutls-devel libffi-devel tar
-  libxslt-devel pcre-devel readline readline-devel openssl-devel
-  rpmdevtools rpm-build sudo zlib zlib-devel ruby gawk }
-c5_packages = rpm_packages + %w{make git bzip2 curl patch openssl-0.9.8e-22.el5_8.4}
-c6_packages = rpm_packages + %w{
-  autoconf git-1.7.1 libvirt libvirt-devel passwd glibc-headers glibc-common glibc}
-
-if env_os == 'centos5'
-  run %Q{ yum install #{c5_packages.sort.join(' ')} -y }
-  run %Q{ rpm -Uvh ftp://ftp.pbone.net/mirror/dl.iuscommunity.org/pub/ius/archive/Redhat/5/i386/autoconf26x-2.63-4.ius.el5.noarch.rpm }
-elsif env_os == 'centos6'
-  run "yum install #{c6_packages.sort.join(' ')} -y"
-end
 
 packages = {}
 packages['deb']     = %w{
@@ -66,7 +47,7 @@ packages['precise'] = packages['trusty'] = packages['xenial'] = packages['tpl']
 run %Q{
   rm -f /etc/dpkg/dpkg.cfg.d/02apt-speedup
   apt-get -qq update && \
-  apt-get -qq install #{packages[env_os].sort.join(' ')} --force-yes
+  DEBIAN_FRONTEND=noninteractive apt-get -qq install #{packages[env_os].sort.join(' ')} --force-yes
 } if %w{xenial trusty precise lucid}.include? env_os
 
 if env_os == 'lucid'
@@ -81,16 +62,6 @@ end
 # user jenkins
 
 run %Q{
-  adduser jenkins -g root
-  adduser puppet
-  mkdir -p /home/jenkins/.ssh
-  chown jenkins: /home/jenkins/.ssh
-  chmod 700 /home/jenkins/.ssh
-} if %w{centos5 centos6}.include? env_os
-
-run "passwd -uf jenkins" if env_os == 'centos6'
-
-run %Q{
   useradd jenkins
   mkdir -p /home/jenkins
   chown jenkins: -R /home/jenkins
@@ -99,11 +70,10 @@ run %Q{
   ln -s /bin/bash /bin/sh
 } if %w{lucid precise trusty xenial}.include? env_os
 
-puppet_file = env_os =~ /centos/ ? "/etc/sysconfig/puppet" : "/etc/default/puppet"
 run %Q{
-  touch #{puppet_file}
+  touch "/etc/default/puppet"
   mkdir -p /opt /nail /package /etc/puppet /var/lib/puppet /var/cache/omnibus
-  chown jenkins: /opt /nail /package /etc/puppet /var/lib/puppet /var/cache/omnibus #{puppet_file}
+  chown jenkins: /opt /nail /package /etc/puppet /var/lib/puppet /var/cache/omnibus "/etc/default/puppet"
 }
 
 run %Q{

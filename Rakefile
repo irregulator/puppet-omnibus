@@ -1,24 +1,15 @@
 # Make sure repository has either tag or branch(not both!) named "VERSION.ITERATION"
 PUPPET_GIT   = ENV["upstream_puppet_git"] || "git://github.com/Yelp/puppet.git"
 VERSION      = ENV["puppet_version"] || "3.8.1"
-ITERATION    = ENV["puppet_vendor_version"] || "y1"
+ITERATION    = ENV["puppet_vendor_version"] || "y3"
 
 PACKAGE_NAME = "puppet-omnibus"
 BUILD_NUMBER = ENV["upstream_build_number"] || 0
 CURDIR       = Dir.pwd
-OS_BUILDS    = %w(lucid precise trusty xenial centos5 centos6)
-
-def package_name_suffix(os)
-  case os
-  when "lucid", "precise", "trusty", "xenial"
-    "_#{VERSION}+yelp-#{BUILD_NUMBER}_amd64.deb"
-  when /centos/
-    "-#{VERSION}.yelp_#{BUILD_NUMBER}-1.x86_64.rpm"
-  end
-end
+OS_BUILDS    = %w(lucid precise trusty xenial)
 
 def package_name(os)
-  "dist/#{os}/#{PACKAGE_NAME}#{package_name_suffix(os)}"
+  "dist/#{os}/#{PACKAGE_NAME}_#{VERSION}+yelp-#{BUILD_NUMBER}_amd64.deb"
 end
 
 def run(cmd)

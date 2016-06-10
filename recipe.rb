@@ -32,10 +32,8 @@ class PuppetOmnibus < FPM::Cookery::Recipe
   omnibus_dir     "/opt/#{name}"
   omnibus_recipes 'libaugeas', 'puppet', 'nginx'
 
-  if File.read('/etc/issue') !~ /centos release 5/i
-    conflicts(*%w{ puppet puppet-common hiera yelp-hiera facter puppetmaster
-                   puppetmaster-passenger puppetmaster-common })
-  end
+  conflicts(*%w{puppet puppet-common hiera yelp-hiera facter puppetmaster
+                puppetmaster-passenger puppetmaster-common})
 
   depends "libssl1.0.0"
 

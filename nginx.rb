@@ -10,25 +10,16 @@ class Nginx < FPM::Cookery::Recipe
 
   section 'System Environment/Daemons'
 
-  platforms [:ubuntu, :debian] do
-    build_depends 'make', 'gcc', 'g++', 'libssl-dev', 'libxml2-dev', 'libxslt1-dev'
+  build_depends 'make', 'gcc', 'g++', 'libssl-dev', 'libxml2-dev', 'libxslt1-dev'
 
-    rel = `cat /etc/lsb-release | grep DISTRIB_CODENAME | cut -d= -f2`.chomp
-    case rel
-    when 'hardy'
-      depends 'libssl0.9.8'
-    when 'lucid'
-      depends 'libssl0.9.8'
-    else
-      depends 'libssl1.0.0'
-    end
-    depends 'libxml2', 'libxslt1.1'
+  rel = `cat /etc/lsb-release | grep DISTRIB_CODENAME | cut -d= -f2`.chomp
+  case rel
+  when 'lucid'
+    depends 'libssl0.9.8'
+  else
+    depends 'libssl1.0.0'
   end
-
-  platforms [:fedora, :redhat, :centos] do
-    build_depends 'gcc', 'gcc-c++', 'make', 'openssl-devel', 'libxml2-devel', 'libxslt-devel'
-    depends 'openssl', 'glibc', 'libxslt', 'perl', 'bash', 'shadow-utils', 'initscripts', 'chkconfig'
-  end
+  depends 'libxml2', 'libxslt1.1'
 
   def build
     configure \

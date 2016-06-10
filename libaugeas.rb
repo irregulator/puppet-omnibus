@@ -14,16 +14,7 @@ class Libaugeas < FPM::Cookery::Recipe
 
   section 'libraries'
 
-  platforms [:ubuntu, :debian] do
-    build_depends 'autoconf', 'bison', 'pkg-config', 'libxml2-dev'
-  end
-
-  platforms [:fedora, :redhat, :centos] do
-    build_depends 'bison', 'pkgconfig'
-
-    centos_5 = IO.read('/etc/redhat-release') =~ /CentOS release 5/
-    build_depends centos_5 ? 'autoconf26x' : 'autoconf'
-  end
+  build_depends 'autoconf', 'bison', 'pkg-config', 'libxml2-dev'
 
   def build
     configure :prefix => destdir,

@@ -17,10 +17,6 @@ gem 'hiera-eyaml',            '2.0.8'      # MIT
 gem 'rack',                   '1.6.4'
 gem 'unicorn',                '4.9.0'
 
-group :centos_6 do
-  gem 'ruby-libvirt',         '0.4.0'
-end
-
 gem 'msgpack',                '0.6.2' # Apache v2
 
 # Puppet tools section
