@@ -10,5 +10,5 @@ tmp-dest
 cache/*
 .*docker_is_created
 dist/
-dockerfiles/*
+dockerfiles/
 puppet-git/

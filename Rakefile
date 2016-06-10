@@ -18,15 +18,13 @@ def run(cmd)
 end
 
 def fetch_puppet_git(dir)
-  run "rm -rf '#{dir}/puppet-git'"
-  run "git clone '#{PUPPET_GIT}' '#{dir}/puppet-git'"
-end
-
-def with_tempdir
-  tempdir = `mktemp -d`.strip
-  yield tempdir
-ensure
-  `rm -rf #{tempdir}`
+  repo_dir = "#{dir}/puppet-git"
+  Dir.chdir(repo_dir) do
+    run "git clean -fdx && git remote set-url origin '#{PUPPET_GIT}' && git fetch origin"
+  end
+rescue => error
+  STDERR.puts error.message
+  run "rm -rf '#{dir}/puppet-git' && git clone --quiet '#{PUPPET_GIT}' '#{dir}/puppet-git'"
 end
 
 def make_dockerfile(os)
@@ -81,7 +79,7 @@ OS_BUILDS.each do |os|
 end
 
 task :clean do
-  run "rm -rf dist/ cache/"
+  run "rm -rf dist/ cache/ pkg/ dockerfiles/"
   run "rm -f .*docker_is_created"
 end
 

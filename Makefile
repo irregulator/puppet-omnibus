@@ -9,5 +9,4 @@ itest_xenial:
 	rake itest_xenial
 
 clean:
-	rm -rf dist/ cache/ pkg/
-	rm -f .*docker_is_created
+	rake clean
