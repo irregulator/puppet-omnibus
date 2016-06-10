@@ -1,3 +1,4 @@
+#!/usr/bin/env ruby
 # This is basically a Docker file but with ruby for convenience.
 #
 # Run all your usual docker directives(lowcase though) and they will each
@@ -24,6 +25,10 @@
 #                                   |
 #           note the spaces here ---'
 
+$:.unshift '.'
+require 'lib/docker'
+extend Docker
+
 OS_SOURCES = {
   'lucid'   => 'docker-dev.yelpcorp.com/lucid_yelp:latest',
   'precise' => 'docker-dev.yelpcorp.com/precise_yelp:latest',
@@ -46,8 +51,9 @@ packages['precise'] = packages['trusty'] = packages['xenial'] = packages['tplx']
 
 run <<-SHELL, '&&'
   rm -f /etc/dpkg/dpkg.cfg.d/02apt-speedup
-  apt-get -qq update
-  DEBIAN_FRONTEND=noninteractive apt-get -qq --yes --force-yes install #{packages[env_os].sort.join(' ')}
+  export DEBIAN_FRONTEND=noninteractive
+  apt-get -q -qq update
+  apt-get -q -qq --yes --force-yes install #{packages[env_os].sort.join(' ')}
 SHELL
 
 run <<-SHELL, '&&' if env_os == 'lucid'

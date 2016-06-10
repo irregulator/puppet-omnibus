@@ -1,11 +1,6 @@
 #!/usr/bin/env ruby
 
-class Rocker
-  def initialize(file)
-    @file = file
-    @data = File.read file
-  end
-
+module Docker
   DOCKER_DIRECTIVES=%w{
     from run volume add copy maintainer cmd expose env entrypoint user
     workdir onbuild }
@@ -16,7 +11,8 @@ class Rocker
   # special case:
   # strip lines in single run block and join them together
   def run(command, separator = ';')
-    puts "RUN " << command.lines.to_a.map(&:strip).reject{|s| s==''}.join(" #{separator} ")
+    puts "RUN " << command.lines.to_a.map(&:strip).
+                           reject{|s| s==''}.join(" #{separator} ")
   end
 
   def method_missing(method, *args)
@@ -27,10 +23,4 @@ class Rocker
       puts method
     end
   end
-
-  def dockerfile
-    instance_eval @data, @file
-  end
 end
-
-Rocker.new(ARGV[0] || "./Rockerfile").dockerfile

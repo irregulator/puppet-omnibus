@@ -31,7 +31,7 @@ end
 
 def make_dockerfile(os)
   run "mkdir -p dockerfiles/#{os}"
-  run "OS=#{os} ./rocker.rb > dockerfiles/#{os}/Dockerfile"
+  run "OS=#{os} ./Dockerfile.rb > dockerfiles/#{os}/Dockerfile"
   `md5sum dockerfiles/#{os}/Dockerfile | cut -c-32`.strip
 end
 
