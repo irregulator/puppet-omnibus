@@ -77,6 +77,8 @@ run <<SHELL, '&&'
   echo 'gem: --no-document' > /etc/gemrc
   echo 'install: --no-ri --no-rdoc' >> /etc/gemrc
   echo 'update: --no-ri --no-rdoc' >> /etc/gemrc
+  cp /etc/gemrc /.gemrc
+  cp /etc/gemrc /root/.gemrc
   cp /etc/gemrc /package/.gemrc
   cp /etc/gemrc /home/jenkins/.gemrc
 SHELL
@@ -92,7 +94,7 @@ run <<SHELL, '&&'
   export RUBY_CONFIGURE_OPTS="--without-gdbm --without-dbm --disable-install-doc --without-tcl --without-tk"
   cat /tmp/ruby-2.1.2-patches/* | /tmp/ruby-build-20140524/bin/ruby-build -p 2.1.2 /opt/puppet-omnibus/embedded
   chown -R jenkins: /opt/puppet-omnibus
-  /opt/puppet-omnibus/embedded/bin/gem update --system
+  /opt/puppet-omnibus/embedded/bin/gem update --system >/dev/null
   rm -rf /opt/puppet-omnibus/embedded/share/*
 SHELL
 
