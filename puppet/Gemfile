@@ -32,3 +32,6 @@ gem 'aws-sdk',                '1.55.0'
 gem 'aws-sdk-resources',      '2.0.29', :require => false
 gem 'retries',                '0.0.5', :require => false
 gem 'fog',                    '1.28.0'
+
+# Vault
+gem 'hiera-vault',            '0.2.1'

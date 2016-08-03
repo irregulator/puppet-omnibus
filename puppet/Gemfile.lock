@@ -118,6 +118,8 @@ GEM
     hiera-eyaml (2.0.8)
       highline (~> 1.6.19)
       trollop (~> 2.0)
+    hiera-vault (0.2.1)
+      vault (~> 0.4)
     highline (1.6.19)
     inflecto (0.0.2)
     ipaddress (0.8.3)
@@ -197,6 +199,7 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
+    vault (0.4.0)
 
 PLATFORMS
   ruby
@@ -210,6 +213,7 @@ DEPENDENCIES
   gpgme (= 2.0.10)
   hiera (= 3.0.1)
   hiera-eyaml (= 2.0.8)
+  hiera-vault (= 0.2.1)
   highline (= 1.6.19)
   json (= 1.8.3)
   msgpack (= 0.6.2)
