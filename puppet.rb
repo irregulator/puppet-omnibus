@@ -15,7 +15,6 @@ class PuppetGem < FPM::Cookery::Recipe
     ENV['PKG_CONFIG_PATH'] = "#{destdir}/lib/pkgconfig"
     cleanenv_safesystem "#{destdir}/bin/bundle config build.ruby-augeas \
                            --with-opt-dir=#{destdir}"
-    cleanenv_safesystem "ls -la #{workdir}/puppet/vendor/cache"
     cleanenv_safesystem "#{destdir}/bin/bundle install --local \
                            --gemfile #{workdir}/puppet/Gemfile \
                            --path #{`gem env GEM_HOME`}"
@@ -29,6 +28,10 @@ class PuppetGem < FPM::Cookery::Recipe
         if head -n1 $file | grep '^#!/usr/bin/env ruby'; then
           sed -i '1s/.*/#!#{destdir.to_s.gsub('/', "\\/")}\\/bin\\/ruby/' $file
         fi
+      done
+
+      for gemdir in `gem env GEM_HOME`/gems/*; do
+        [ -d $gemdir ] && rm -rf $gemdir/spec
       done
     SHELL
   end
