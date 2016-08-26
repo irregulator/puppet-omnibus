@@ -15,17 +15,17 @@ class PuppetGem < FPM::Cookery::Recipe
     ENV['PKG_CONFIG_PATH'] = "#{destdir}/lib/pkgconfig"
     cleanenv_safesystem "#{destdir}/bin/bundle config build.ruby-augeas \
                            --with-opt-dir=#{destdir}"
+    cleanenv_safesystem "#{destdir}/bin/bundle config --delete path"
     cleanenv_safesystem "#{destdir}/bin/bundle install --local \
                            --gemfile #{workdir}/puppet/Gemfile \
-                           --path #{`gem env GEM_HOME`}"
-
-    cleanenv_safesystem "#{destdir}/bin/gem clean"
-    cleanenv_safesystem "#{destdir}/bin/gem install --no-ri --no-rdoc #{workdir}/vendor/puppet-#{ENV['PUPPET_VERSION']}.gem"
+                           --system"
+    cleanenv_safesystem "#{destdir}/bin/gem install #{workdir}/vendor/puppet-#{ENV['PUPPET_VERSION']}.gem"
 
     # bundle is shit
     cleanenv_safesystem <<-SHELL
       for file in #{destdir}/bin/*; do
         if head -n1 $file | grep '^#!/usr/bin/env ruby'; then
+          echo "Fixing shebang in $file"
           sed -i '1s/.*/#!#{destdir.to_s.gsub('/', "\\/")}\\/bin\\/ruby/' $file
         fi
       done

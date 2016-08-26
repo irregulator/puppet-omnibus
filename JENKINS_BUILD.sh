@@ -37,5 +37,6 @@ FPM_CACHE_DIR=/package/vendor bundle exec fpm-cook clean
 FPM_CACHE_DIR=/package/vendor bundle exec fpm-cook package recipe.rb
 echo "Copying package to the dist folder"
 cp -v pkg/* /package_dest/
+chown -R $EXT_UID:$EXT_GID /package_dest/*
 echo "Package copying worked!"
 exit 0

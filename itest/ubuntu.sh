@@ -45,3 +45,6 @@ else
   exit 1
 fi
 
+set -e
+(/opt/puppet-omnibus/embedded/bin/gem list | grep -q augeas) || (echo "Augeas gem is missing" && exit 1)
+(/opt/puppet-omnibus/embedded/bin/gem list | grep -q aws-sdk) || (echo "AWS-SDK gem is missing" && exit 1)

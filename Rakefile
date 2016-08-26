@@ -60,7 +60,8 @@ OS_BUILDS.each do |os|
         -e PUPPET_VERSION=#{VERSION}.#{ITERATION} \
         -e PUPPET_BASE=#{VERSION} \
         -e HOME=/package \
-        -u jenkins \
+        -e EXT_UID=`id -u` \
+        -e EXT_GID=`id -g` \
         -v #{CURDIR}:/package_source:ro \
         -v #{CURDIR}/dist/#{os}:/package_dest:rw \
         -v /etc/ssh/ssh_known_hosts:/etc/ssh/ssh_known_hosts:ro \
