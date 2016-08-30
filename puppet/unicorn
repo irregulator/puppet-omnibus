@@ -10,6 +10,8 @@ export RUBY_GC_MALLOC_LIMIT=${RUBY_GC_MALLOC_LIMIT-64000000}
 export RUBY_GC_OLDMALLOC_LIMIT=${RUBY_GC_OLDMALLOC_LIMIT-64000000}
 export PATH="/opt/puppet-omnibus/embedded/bin:$PATH"
 
-exec nice -n +10 setuidgid puppet /opt/puppet-omnibus/embedded/bin/unicorn \
-                        -c /opt/puppet-omnibus/etc/unicorn.conf \
-                        -E deployment "$@"
+exec nice -n +10 setuidgid puppet \
+     /opt/puppet-omnibus/embedded/bin/je \
+     /opt/puppet-omnibus/embedded/bin/unicorn \
+     -c /opt/puppet-omnibus/etc/unicorn.conf \
+     -E deployment "$@"
