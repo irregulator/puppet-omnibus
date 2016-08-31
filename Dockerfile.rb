@@ -79,15 +79,14 @@ run <<SHELL, '&&'
 SHELL
 
 # ruby2.1.2
-add "ruby-build-20140524.tar.gz /tmp"
-add "ruby-2.1.2-patches.tar.gz /tmp"
+add "ruby-build-20160602.tar.gz /tmp"
 run <<SHELL, '&&'
   mkdir -p /opt/puppet-omnibus/embedded
   export MAKE_OPTS="-j3 -s"
   export RUBY_CFLAGS=-Os
   export RUBY_BUILD_CACHE_PATH=/tmp
   export RUBY_CONFIGURE_OPTS="--without-gdbm --without-dbm --disable-install-doc --without-tcl --without-tk"
-  cat /tmp/ruby-2.1.2-patches/* | /tmp/ruby-build-20140524/bin/ruby-build -p 2.1.2 /opt/puppet-omnibus/embedded
+  /tmp/ruby-build-20160602/bin/ruby-build 2.2.5 /opt/puppet-omnibus/embedded
   /opt/puppet-omnibus/embedded/bin/gem update --system >/dev/null
   rm -rf /opt/puppet-omnibus/embedded/share/*
 SHELL
