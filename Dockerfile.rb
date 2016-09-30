@@ -61,7 +61,7 @@ run <<-SHELL, '&&' if env_os == 'lucid'
   wget http://security.ubuntu.com/ubuntu/pool/main/c/ca-certificates/ca-certificates_20160104ubuntu0.14.04.1_all.deb
   wget http://security.ubuntu.com/ubuntu/pool/main/o/openssl/openssl_1.0.1f-1ubuntu2.21_amd64.deb
   dpkg -i openssl_1.0.1f-1ubuntu2.21_amd64.deb ca-certificates_20160104ubuntu0.14.04.1_all.deb
-  rm openssl_1.0.1f-1ubuntu2.19_amd64.deb ca-certificates_20160104ubuntu0.14.04.1_all.deb
+  rm openssl_1.0.1f-1ubuntu2.21_amd64.deb ca-certificates_20160104ubuntu0.14.04.1_all.deb
 SHELL
 
 # user jenkins
