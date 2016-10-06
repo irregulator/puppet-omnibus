@@ -26,3 +26,6 @@ gem 'retries',                '0.0.5', :require => false
 
 # Vault
 gem 'hiera-vault',            '0.2.1'
+
+# ipaddress required for puppet-network
+gem 'ipaddress',              '0.8.3'
