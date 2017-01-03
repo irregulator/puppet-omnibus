@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 # Main section
 # TODO: why do we need all of this?
-gem 'json',                   '1.8.3'
+gem 'json',                   '2.0.2'
 gem 'deep_merge',             '1.0.1'
 gem 'rgen',                   '0.6.6'
 gem 'ruby-augeas',            '0.4.1'
@@ -10,7 +10,7 @@ gem 'ruby-shadow',            '2.2.0'
 gem 'rack',                   '1.6.4'
 gem 'unicorn',                '4.9.0'
 
-gem 'msgpack',                '0.6.2' # Apache v2
+gem 'msgpack',                '1.0.2' # Apache v2
 gem 'jemalloc'
 
 # Puppet tools section
