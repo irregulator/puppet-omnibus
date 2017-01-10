@@ -49,14 +49,12 @@ GEM
       hiera (>= 2.0, < 4)
       json_pure
     systemu (2.6.5)
-    xmlrpc (0.2.1)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   fpm-cookery!
-  xmlrpc
 
 BUNDLED WITH
    1.12.5
