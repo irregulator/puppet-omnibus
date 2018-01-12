@@ -6,7 +6,13 @@ BUILD_NUMBER := $(or ${upstream_build_number},0)
 
 .PHONY: dist docker itest package clean
 
-dist:
+require_os:
+	if [ -z "$(OS)" ]; then \
+		echo "OS is not set, aborting"; \
+		exit 1; \
+	fi
+
+dist: require_os
 	mkdir -p pkg
 	mkdir -p dist/$(OS)
 	chmod 777 pkg dist/$(OS)
@@ -22,11 +28,11 @@ puppet_git:
 		git clone $(PUPPET_GIT) puppet-git;                \
 	fi
 
-docker:
+docker: require_os
 	flock /tmp/puppet_omnibus_$(OS)_docker_build.lock \
 	docker build -f Dockerfile.$(OS) -t package_puppet_omnibus_$(OS) .
 
-package: dist puppet_git docker
+package: require_os dist puppet_git docker
 	docker run -t -i \
 	  -e BUILD_NUMBER=$(BUILD_NUMBER) \
 	  -e PUPPET_VERSION=$(VERSION).$(ITERATION) \
@@ -40,7 +46,7 @@ package: dist puppet_git docker
 	  package_puppet_omnibus_$(OS) \
 	  /package_source/JENKINS_BUILD.sh
 
-itest: package
+itest: require_os package
 	docker run \
 		-v `pwd`/itest:/itest:ro \
 		-v `pwd`/dist:/dist:ro \
@@ -50,3 +56,6 @@ itest: package
 
 clean:
 	rm -rf dist/ cache/ pkg/
+
+itest_%:
+	OS=$* make itest
