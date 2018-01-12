@@ -33,7 +33,7 @@ docker: require_os
 	docker build -f Dockerfile.$(OS) -t package_puppet_omnibus_$(OS) .
 
 package: require_os dist puppet_git docker
-	docker run -t -i \
+	docker run \
 	  -e BUILD_NUMBER=$(BUILD_NUMBER) \
 	  -e PUPPET_VERSION=$(VERSION).$(ITERATION) \
 	  -e PUPPET_BASE=$(VERSION) \
