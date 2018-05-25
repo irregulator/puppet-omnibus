@@ -17,6 +17,9 @@ class Nginx < FPM::Cookery::Recipe
   when 'lucid'
     build_depends 'libssl-dev'
     depends 'libssl0.9.8'
+  when 'trusty', 'xenial'
+    build_depends 'libssl-dev'
+    depends 'libssl1.0.0'
   else
     build_depends 'libssl1.0-dev'
     depends 'libssl1.0.0'
