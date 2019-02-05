@@ -1,8 +1,9 @@
-PUPPET_GIT   := $(or ${upstream_puppet_git},"git://github.com/Yelp/puppet.git")
-VERSION      := $(or ${puppet_version},"3.8.1")
-ITERATION    := $(or ${puppet_vendor_version},y3)
-PACKAGE_NAME := "puppet-omnibus"
-BUILD_NUMBER := $(or ${upstream_build_number},0)
+PUPPET_GIT    := $(or ${upstream_puppet_git},"git://github.com/Yelp/puppet.git")
+NGINX_VTS_GIT := $(or ${nginx_vts_git}, "git://github.com/vozlt/nginx-module-vts.git")
+VERSION       := $(or ${puppet_version},"3.8.1")
+ITERATION     := $(or ${puppet_vendor_version},y3)
+PACKAGE_NAME  := "puppet-omnibus"
+BUILD_NUMBER  := $(or ${upstream_build_number},0)
 
 .PHONY: dist docker itest package clean
 
@@ -28,11 +29,23 @@ puppet_git:
 		git clone $(PUPPET_GIT) puppet-git;                \
 	fi
 
+nginx_vts_git:
+	if [ -d nginx-module-vts-git ] && [ -d nginx-module-vts-git/.git ]; then \
+		cd nginx-module-vts-git;                                             \
+		git clean -fdx;                                                      \
+		git remote set-url origin $(NGINX_VTS_GIT);                          \
+		git fetch origin;                                                    \
+	else                                                                     \
+		rm -rf nginx-module-vts-git;                                         \
+		git clone $(NGINX_VTS_GIT) nginx-module-vts-git;                     \
+	fi
+
+
 docker: require_os
 	flock /tmp/puppet_omnibus_$(OS)_docker_build.lock \
 	docker build -f Dockerfile.$(OS) -t package_puppet_omnibus_$(OS) .
 
-package: require_os dist puppet_git docker
+package: require_os dist puppet_git nginx_vts_git docker
 	docker run \
 	  -e BUILD_NUMBER=$(BUILD_NUMBER) \
 	  -e PUPPET_VERSION=$(VERSION).$(ITERATION) \

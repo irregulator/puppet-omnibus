@@ -39,6 +39,7 @@ class Nginx < FPM::Cookery::Recipe
       '--without-http_scgi_module',
       '--without-http_uwsgi_module',
       '--without-http_fastcgi_module',
+      '--add-module=/package_source/nginx-module-vts-git',
 
       :prefix                     => prefix,
 
