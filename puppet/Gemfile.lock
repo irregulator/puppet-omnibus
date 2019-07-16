@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    CFPropertyList (2.2.7)
     aws-sdk-core (2.0.29)
       builder (~> 3.0)
       jmespath (~> 1.0)
@@ -99,6 +100,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  CFPropertyList (= 2.2.7)
   aws-sdk-resources (= 2.0.29)
   deep_merge (= 1.0.1)
   hiera-vault (= 0.2.1)
