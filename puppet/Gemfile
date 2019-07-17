@@ -28,3 +28,6 @@ gem 'hiera-vault',            '0.2.1'
 
 # ipaddress required for puppet-network
 gem 'ipaddress',              '0.8.3'
+
+# CFPropertyList gem for macos packages (munki)
+gem 'CFPropertyList',         '2.2.7'
