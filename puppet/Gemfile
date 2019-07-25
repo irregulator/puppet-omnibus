@@ -20,7 +20,7 @@ gem 'serverspec',             '2.36.0'     # MIT
 gem 'r10k',                   '1.4.1'
 
 # AWS section
-gem 'aws-sdk-resources',      '2.0.29', :require => false
+gem 'aws-sdk-resources',      '3.50.0', :require => false
 gem 'retries',                '0.0.5', :require => false
 
 # Vault
