@@ -26,7 +26,6 @@ class Nginx < FPM::Cookery::Recipe
   def build
     patch('/package_source/vendor/nginx/patches/patch-gcc7.diff', level=1)
     configure \
-      '--with-cc-opt="-Wno-error"',
       '--with-http_stub_status_module',
       '--with-http_ssl_module',
       '--with-pcre',
