@@ -24,7 +24,6 @@ class Nginx < FPM::Cookery::Recipe
   depends 'libxml2', 'libxslt1.1'
 
   def build
-    patch('/package_source/vendor/nginx/patches/patch-gcc7.diff', level=1)
     configure \
       '--with-http_stub_status_module',
       '--with-http_ssl_module',
