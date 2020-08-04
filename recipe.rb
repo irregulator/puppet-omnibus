@@ -35,7 +35,13 @@ class PuppetOmnibus < FPM::Cookery::Recipe
   conflicts(*%w{puppet puppet-common hiera yelp-hiera facter puppetmaster
                 puppetmaster-passenger puppetmaster-common})
 
-  depends "libssl1.0.0"
+  rel = `cat /etc/lsb-release | grep DISTRIB_CODENAME | cut -d= -f2`.chomp
+  case rel
+  when 'trusty', 'xenial', 'bionic'
+    depends 'libssl1.0.0'
+  else
+    depends 'libssl1.1'
+  end
 
   def build
   end

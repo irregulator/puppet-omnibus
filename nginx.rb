@@ -2,11 +2,11 @@ class Nginx < FPM::Cookery::Recipe
   description 'a high performance web server and a reverse proxy server'
 
   name     'nginx'
-  version  '1.13.12'
+  version  '1.16.1'
   revision 1
   homepage 'http://nginx.org/'
   source   "http://nginx.org/download/nginx-#{version}.tar.gz"
-  sha1     'ad26921175b28acb8ae6c4eda59050df83279e6e'
+  sha1     '77ce4d26481b62f7a9d83e399454df0912f01a4b'
 
   section 'System Environment/Daemons'
 
@@ -17,9 +17,12 @@ class Nginx < FPM::Cookery::Recipe
   when 'trusty', 'xenial'
     build_depends 'libssl-dev'
     depends 'libssl1.0.0'
-  else
+  when 'bionic'
     build_depends 'libssl1.0-dev'
     depends 'libssl1.0.0'
+  else
+    build_depends 'libssl-dev'
+    depends 'libssl1.1'
   end
   depends 'libxml2', 'libxslt1.1'
 
