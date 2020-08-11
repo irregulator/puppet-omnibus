@@ -52,7 +52,7 @@ itest: require_os package
 		-v `pwd`/dist:/dist:ro \
 		docker-dev.yelpcorp.com/$(OS)_yelp \
 		/itest/$(OS).sh \
-		/dist/$(OS)/$(PACKAGE_NAME)_$(VERSION)-$(BUILD_NUMBER)_amd64.deb
+		/dist/$(OS)/$(PACKAGE_NAME)_$(VERSION)-$(BUILD_NUMBER)-yelp_amd64.deb
 
 clean:
 	rm -rf dist/ cache/ pkg/
