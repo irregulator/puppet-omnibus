@@ -1,8 +1,8 @@
-PUPPET_GIT   := $(or ${upstream_puppet_git},"git://github.com/Yelp/puppet.git")
-VERSION      := $(or ${puppet_version},"4.5.3")
-ITERATION    := $(or ${puppet_vendor_version},y5)
-PACKAGE_NAME := "puppet-omnibus"
-BUILD_NUMBER := $(or ${upstream_build_number},0)
+PUPPET_GIT    := $(or ${upstream_puppet_git},"git://github.com/Yelp/puppet.git")
+VERSION       := $(or ${puppet_version},"4.5.3")
+ITERATION     := $(or ${puppet_vendor_version},y6)
+PACKAGE_NAME  := "puppet-omnibus"
+PKG_ITERATION := yelp-1
 
 .PHONY: dist docker itest package clean
 
@@ -34,7 +34,7 @@ docker: require_os
 
 package: require_os dist puppet_git docker
 	docker run \
-	  -e BUILD_NUMBER=$(BUILD_NUMBER) \
+	  -e PKG_ITERATION=$(PKG_ITERATION) \
 	  -e PUPPET_VERSION=$(VERSION).$(ITERATION) \
 	  -e PUPPET_BASE=$(VERSION) \
 	  -e HOME=/package \
@@ -52,7 +52,8 @@ itest: require_os package
 		-v `pwd`/dist:/dist:ro \
 		docker-dev.yelpcorp.com/$(OS)_yelp \
 		/itest/$(OS).sh \
-		/dist/$(OS)/$(PACKAGE_NAME)_$(VERSION)+yelp-$(BUILD_NUMBER)_amd64.deb
+		/dist/$(OS)/$(PACKAGE_NAME)_$(VERSION)-$(PKG_ITERATION)_amd64.deb \
+		$(VERSION)
 
 clean:
 	rm -rf dist/ cache/ pkg/

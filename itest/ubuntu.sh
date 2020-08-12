@@ -3,11 +3,12 @@
 cd /
 
 if [ -z "$*" ]; then
-  echo "$0 requires at least one argument (path to package to install)."
+  echo "$0 requires at least two arguments (path to package to install and puppet version)."
   exit 1
 else
-  packages_to_install=$*
-  echo "Going to run integration tests on $packages_to_install"
+  package_to_install=$1
+  puppet_version=$2
+  echo "Going to run integration tests on $package_to_install"
 fi
 
 if [ -e /opt/puppet-omnibus ]; then
@@ -15,8 +16,7 @@ if [ -e /opt/puppet-omnibus ]; then
   exit 1
 fi
 
-apt-get install virt-what libgmp10 libxml2 libxslt1.1 libssl1.0.0 --yes --force-yes
-if dpkg -i $packages_to_install; then
+if gdebi -n $package_to_install; then
   echo "Looks like it installed correctly"
 else
   echo "Dpkg install failed"
@@ -30,10 +30,24 @@ else
   exit 1
 fi
 
-if /opt/puppet-omnibus/bin/puppet --version; then
-  echo "puppet-omnibus looks like it Works!"
+if [ "$(/opt/puppet-omnibus/bin/puppet --version)" == "$puppet_version" ]; then
+  echo "puppet-omnibus looks like it works and has version $puppet_version!"
 else
-  echo "puppet-omnibus --version failed"
+  echo "puppet-omnibus --version failed or was not version $puppet_version"
+  exit 1
+fi
+
+if /opt/puppet-omnibus/embedded/bin/ruby -v; then
+  echo "puppet-omnibus contains a ruby that ran correctly!"
+else
+  echo "puppet-omnibus doesn't contain an ruby or it errored showing its version"
+  exit 1
+fi
+
+if /opt/puppet-omnibus/embedded/bin/nginx -V; then
+  echo "puppet-omnibus contains a nginx that ran correctly!"
+else
+  echo "puppet-omnibus doesn't contain an nginx or it errored showing its version"
   exit 1
 fi
 

@@ -19,9 +19,7 @@ class PuppetOmnibus < FPM::Cookery::Recipe
   name 'puppet-omnibus'
   version ENV['PUPPET_BASE']
   description 'Puppet Omnibus package'
-  revision ENV['BUILD_NUMBER']
-
-  vendor 'yelp-'
+  revision ENV['PKG_ITERATION']
 
   maintainer '<tdoran@yelp.com>'
   license 'Apache 2.0 License'
@@ -35,7 +33,13 @@ class PuppetOmnibus < FPM::Cookery::Recipe
   conflicts(*%w{puppet puppet-common hiera yelp-hiera facter puppetmaster
                 puppetmaster-passenger puppetmaster-common})
 
-  depends "libssl1.0.0"
+  rel = `cat /etc/lsb-release | grep DISTRIB_CODENAME | cut -d= -f2`.chomp
+  case rel
+  when 'trusty', 'xenial', 'bionic'
+    depends 'libssl1.0.0'
+  else
+    depends 'libssl1.1'
+  end
 
   def build
   end
