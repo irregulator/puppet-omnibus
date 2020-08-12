@@ -19,7 +19,7 @@ class PuppetOmnibus < FPM::Cookery::Recipe
   name 'puppet-omnibus'
   version ENV['PUPPET_BASE']
   description 'Puppet Omnibus package'
-  revision ENV['BUILD_NUMBER'] + '-yelp'
+  revision ENV['PKG_ITERATION']
 
   maintainer '<tdoran@yelp.com>'
   license 'Apache 2.0 License'

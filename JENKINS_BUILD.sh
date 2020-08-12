@@ -3,9 +3,9 @@ set -e
 export PATH="/opt/puppet-omnibus/embedded/bin:/opt/local/bin:/sbin:/usr/sbin:$PATH"
 
 set -x
-if [ "$BUILD_NUMBER" == "" ];then
-  echo "BUILD_NUMBER environment not set - producing debug build"
-  export BUILD_NUMBER=debug0
+if [ "$PKG_ITERATION" == "" ];then
+  echo "PKG_ITERATION environment not set - producing debug build"
+  export PKG_ITERATION=yelp-debug0
 fi
 
 if [ "$PUPPET_VERSION" == "" ];then
