@@ -1,60 +1,66 @@
-GIT
-  remote: git://github.com/bobtfish/fpm-cookery.git
-  revision: dff240106a053c41414443120b44dc18a5df71ba
-  branch: master
-  specs:
-    fpm-cookery (0.16.2)
-      addressable
-      facter
-      fpm (~> 0.4)
-      puppet
-      systemu
-
 GEM
   remote: https://rubygems.org/
   specs:
-    CFPropertyList (2.2.8)
-    addressable (2.4.0)
-    arr-pm (0.0.10)
+    addressable (2.3.8)
+    arr-pm (0.0.11)
       cabin (> 0)
-    backports (3.6.8)
+    backports (3.23.0)
     cabin (0.8.1)
-    childprocess (0.5.9)
-      ffi (~> 1.0, >= 1.0.11)
-    clamp (0.6.5)
+    clamp (1.0.1)
+    dotenv (2.7.6)
     facter (2.4.6)
-      CFPropertyList (~> 2.2.6)
-    ffi (1.9.14)
-    fpm (0.4.42)
-      arr-pm (~> 0.0.8)
+    fpm (1.14.1)
+      arr-pm (~> 0.0.11)
       backports (>= 2.6.2)
       cabin (>= 0.6.0)
-      childprocess
-      clamp (~> 0.6)
-      ftw (~> 0.0.30)
-      json (>= 1.7.7)
-    ftw (0.0.44)
-      addressable
-      backports (>= 2.6.2)
-      cabin (> 0)
-      http_parser.rb (~> 0.6)
+      clamp (~> 1.0.0)
+      git (>= 1.3.0, < 2.0)
+      json (>= 1.7.7, < 3.0)
+      pleaserun (~> 0.0.29)
+      rexml
+      stud
+    fpm-cookery (0.35.1)
+      addressable (~> 2.3.8)
+      facter
+      fpm (~> 1.1)
+      json (>= 1.7.7, < 2.0)
+      json_pure (>= 1.7.7, < 2.0)
+      puppet (>= 3.4, < 6.0)
+      safe_yaml (~> 1.0.4)
+      systemu
+    git (1.7.0)
+      rchardet (~> 1.8)
     hiera (3.2.0)
       json_pure
-    http_parser.rb (0.6.0)
-    json (2.0.1)
-    json_pure (2.0.1)
+    insist (1.0.0)
+    json (1.8.6)
+    json_pure (1.8.6)
+    mustache (0.99.8)
+    pleaserun (0.0.31)
+      cabin (> 0)
+      clamp
+      dotenv
+      insist
+      mustache (= 0.99.8)
+      stud
     puppet (4.5.2)
-      CFPropertyList (~> 2.2.6)
       facter (> 2.0, < 4)
       hiera (>= 2.0, < 4)
       json_pure
+    rchardet (1.8.0)
+    rexml (3.2.5)
+    safe_yaml (1.0.5)
+    stud (0.0.23)
     systemu (2.6.5)
+    webrick (1.7.0)
+    xmlrpc (0.3.2)
+      webrick
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  fpm-cookery!
-
-BUNDLED WITH
-   1.12.5
+  fpm (~> 1.14.1)
+  fpm-cookery (= 0.35.1)
+  rexml (~> 3.2.5)
+  xmlrpc (~> 0.3.2)

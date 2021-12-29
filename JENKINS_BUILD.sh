@@ -30,6 +30,8 @@ mv pkg/puppet-$PUPPET_VERSION.gem /package/vendor/
 
 # build omnibus package
 cd /package
+# Ensure a consistent json_pure version, since it is not pinned within the puppet gem and tries installing the newest available
+gem install /package/vendor/cache/json_pure-1.8.6.gem
 gem install /package/vendor/puppet-$PUPPET_VERSION.gem
 bundle install --local --path /tmp
 FPM_CACHE_DIR=/package/vendor bundle exec fpm-cook clean

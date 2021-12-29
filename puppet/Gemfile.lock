@@ -802,6 +802,7 @@ GEM
     rack (1.6.4)
     raindrops (0.16.0)
     rake (11.2.2)
+    rbtree (0.4.4)
     retries (0.0.5)
     rgen (0.6.6)
     rspec (3.5.0)
@@ -830,12 +831,17 @@ GEM
       rspec (~> 3.0)
       rspec-its
       specinfra (~> 2.53)
+    set (1.0.2)
     sfl (2.2)
+    sorted_set (1.0.3)
+      rbtree
+      set (~> 1.0)
     specinfra (2.59.6)
       net-scp
       net-ssh (>= 2.7, < 4.0)
       net-telnet
       sfl
+    sync (0.5.0)
     systemu (2.5.2)
     unicorn (4.9.0)
       kgio (~> 2.6)
@@ -864,6 +870,8 @@ DEPENDENCIES
   ruby-shadow (= 2.2.0)
   sensu-plugin (= 1.2.0)
   serverspec (= 2.36.0)
+  sorted_set (~> 1.0.3)
+  sync (~> 0.5.0)
   unicorn (= 4.9.0)
 
 BUNDLED WITH

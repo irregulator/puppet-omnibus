@@ -37,8 +37,10 @@ class PuppetOmnibus < FPM::Cookery::Recipe
   case rel
   when 'trusty', 'xenial', 'bionic'
     depends 'libssl1.0.0'
-  else
+  when 'focal'
     depends 'libssl1.1'
+  else
+    depends 'libssl3'
   end
 
   def build

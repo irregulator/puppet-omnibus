@@ -4,8 +4,8 @@ RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get --yes --force-yes install \
       autoconf bison build-essential curl fakeroot gawk git-core libffi-dev \
       libffi7 libgdbm-dev libncurses5-dev libpcre3-dev \
-      libreadline-dev libsqlite3-dev libxml2-dev libxslt1-dev \
-      pkg-config ruby screen sudo wget zlib1g zlib1g-dev && \
+      libreadline-dev libsqlite3-dev libssl-dev libxml2-dev \
+      libxslt1-dev pkg-config ruby screen sudo wget zlib1g zlib1g-dev && \
     apt-get clean
 
 RUN rm -f /bin/sh && \
@@ -21,15 +21,6 @@ RUN rm -f /bin/sh && \
 
 ADD vendor/ruby-build-20211227.tar.gz /tmp
 
-# PEREL-2701: Download and install libssl-dev 1.1 from impish, since jammy
-# moves to 3.0 and Ruby doesn't support that at all yet. Jammy does include a
-# runtime edition of 1.1 in libssl1.1 though, just doesn't have development headers
-#
-# Admittedly, this is a hack, and hopefully the situation here is better later
-# on in jammy's release.
-RUN wget http://mirrors.kernel.org/ubuntu/pool/main/o/openssl/libssl-dev_1.1.1l-1ubuntu1_amd64.deb
-RUN dpkg -i libssl-dev_1.1.1l-1ubuntu1_amd64.deb
-
 RUN mkdir -p /opt/puppet-omnibus/embedded && \
     export MAKE_OPTS="-j3 -s" && \
     export RUBY_CFLAGS=-Os && \
@@ -39,6 +30,6 @@ RUN mkdir -p /opt/puppet-omnibus/embedded && \
     --disable-install-doc --without-tcl --without-tk" && \
     /tmp/ruby-build-20211227/bin/ruby-build -p 3.1.0 /opt/puppet-omnibus/embedded
 
-RUN /opt/puppet-omnibus/embedded/bin/gem install rubygems-update -v '<3' && \
+RUN /opt/puppet-omnibus/embedded/bin/gem install rubygems-update && \
     /opt/puppet-omnibus/embedded/bin/update_rubygems && \
     rm -rf /opt/puppet-omnibus/embedded/share/*

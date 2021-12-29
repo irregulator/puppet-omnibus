@@ -6,7 +6,7 @@ gem 'json',                   '1.8.6'
 gem 'deep_merge',             '1.0.1'
 gem 'rgen',                   '0.6.6'
 gem 'ruby-augeas',            '0.4.1'
-gem 'ruby-shadow',            '2.2.0'
+gem 'ruby-shadow',            '2.5.1'
 gem 'rack',                   '1.6.4'
 gem 'unicorn',                '4.9.0'
 
@@ -31,3 +31,9 @@ gem 'ipaddress',              '0.8.3'
 
 # CFPropertyList gem for macos packages (munki)
 gem 'CFPropertyList',         '2.2.7'
+
+# Ruby 2.7.0+ moved sync out into a separate gem
+gem "sync", "~> 0.5.0"
+
+# Ruby 3.0.0+ moved sorted_set out into a separate gem
+gem "sorted_set", "~> 1.0.3"
