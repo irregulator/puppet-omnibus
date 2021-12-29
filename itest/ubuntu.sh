@@ -62,3 +62,5 @@ fi
 set -e
 (/opt/puppet-omnibus/embedded/bin/gem list | grep -q augeas) || (echo "Augeas gem is missing" && exit 1)
 (/opt/puppet-omnibus/embedded/bin/gem list | grep -q aws-sdk) || (echo "AWS-SDK gem is missing" && exit 1)
+# Added for PEAUTO-542
+(/opt/puppet-omnibus/embedded/bin/gem list | grep -q CFPropertyList) || (echo "CFPropertyList gem is missing" && exit 1)

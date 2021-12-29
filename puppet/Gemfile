@@ -29,7 +29,7 @@ gem 'hiera-vault',            '0.2.1'
 # ipaddress required for puppet-network
 gem 'ipaddress',              '0.8.3'
 
-# CFPropertyList gem for macos packages (munki)
+# PEAUTO-542: CFPropertyList gem for macos packages (munki)
 gem 'CFPropertyList',         '2.2.7'
 
 # Ruby 2.7.0+ moved sync out into a separate gem
