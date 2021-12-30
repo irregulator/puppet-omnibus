@@ -51,7 +51,7 @@ itest: require_os package
 		-v `pwd`/itest:/itest:ro \
 		-v `pwd`/dist:/dist:ro \
 		docker-dev.yelpcorp.com/$(OS)_yelp \
-		/itest/$(OS).sh \
+		/itest/ubuntu.sh \
 		/dist/$(OS)/$(PACKAGE_NAME)_$(VERSION)-$(PKG_ITERATION)_amd64.deb \
 		$(VERSION)
 
