@@ -37,6 +37,13 @@ else
   exit 1
 fi
 
+if /opt/puppet-omnibus/embedded/bin/facter -v; then
+  echo "puppet-omnibus contains a facter that ran correctly"
+else
+  echo "puppet-omnibus doesn't contain a facter or it errored showing its version"
+  exit 1
+fi
+
 if /opt/puppet-omnibus/embedded/bin/ruby -v; then
   echo "puppet-omnibus contains a ruby that ran correctly!"
 else
