@@ -30,6 +30,7 @@ mv pkg/puppet-$PUPPET_VERSION.gem /package/vendor/
 
 # build omnibus package
 cd /package
+gem install json_pure -v 2.5.1
 gem install /package/vendor/puppet-$PUPPET_VERSION.gem
 bundle install --local --path /tmp
 FPM_CACHE_DIR=/package/vendor bundle exec fpm-cook clean
