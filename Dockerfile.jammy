@@ -27,11 +27,11 @@ ADD vendor/ruby-build-20211203.tar.gz /tmp
 #
 # Admittedly, this is a hack, and hopefully the situation here is better later
 # on in jammy's release.
-
-
+# 
+# UPDATE: libssl1.1 runtime was removed from the jammy package archive before release
+# so we now also need to pull in libssl1.1 from impish
 RUN wget https://mirrors.edge.kernel.org/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1l-1ubuntu1_amd64.deb
 RUN wget https://mirrors.edge.kernel.org/ubuntu/pool/main/o/openssl/libssl-dev_1.1.1l-1ubuntu1_amd64.deb
-
 RUN dpkg -i libssl1.1_1.1.1l-1ubuntu1_amd64.deb
 RUN dpkg -i libssl-dev_1.1.1l-1ubuntu1_amd64.deb
 
