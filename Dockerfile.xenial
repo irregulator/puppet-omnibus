@@ -31,3 +31,5 @@ RUN mkdir -p /opt/puppet-omnibus/embedded && \
 RUN /opt/puppet-omnibus/embedded/bin/gem install rubygems-update -v '<3' && \
     /opt/puppet-omnibus/embedded/bin/update_rubygems && \
     rm -rf /opt/puppet-omnibus/embedded/share/*
+
+ADD facter.patch /tmp

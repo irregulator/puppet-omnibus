@@ -1,0 +1,11 @@
+--- /var/lib/gems/3.0.0/gems/facter-2.5.7/lib/facter/virtual.old	2022-05-27 09:27:48.749828377 +0000
++++ /var/lib/gems/3.0.0/gems/facter-2.5.7/lib/facter/virtual.rb	2022-05-27 09:30:31.633885481 +0000
+@@ -270,7 +270,7 @@
+       when /ibm_systemz/i
+         'zlinux'
+       else
+-        output.to_s.split("\n").last
++        output.to_s.split("\n").first
+       end
+     end
+   end
