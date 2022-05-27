@@ -32,6 +32,9 @@ mv pkg/puppet-$PUPPET_VERSION.gem /package/vendor/
 cd /package
 gem install json_pure -v 2.5.1
 gem install /package/vendor/puppet-$PUPPET_VERSION.gem
+cd /opt/puppet-omnibus/embedded/lib/ruby/gems/2.4.0/gems/facter-2.5.7/lib/facter
+patch -p9 < /tmp/facter.patch
+cd /package
 bundle install --local --path /tmp
 FPM_CACHE_DIR=/package/vendor bundle exec fpm-cook clean
 FPM_CACHE_DIR=/package/vendor bundle exec fpm-cook package recipe.rb
