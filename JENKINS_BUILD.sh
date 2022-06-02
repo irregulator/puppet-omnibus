@@ -32,7 +32,8 @@ mv pkg/puppet-$PUPPET_VERSION.gem /package/vendor/
 cd /package
 gem install json_pure -v 2.5.1
 gem install /package/vendor/puppet-$PUPPET_VERSION.gem
-cd /opt/puppet-omnibus/embedded/lib/ruby/gems/2.4.0/gems/facter-2.5.7/lib/facter
+FACTER_RB=$(/opt/puppet-omnibus/embedded/bin/gem which facter)
+cd ${FACTER_RB::-3}
 patch -p9 < /tmp/facter.patch
 cd /package
 bundle install --local --path /tmp
