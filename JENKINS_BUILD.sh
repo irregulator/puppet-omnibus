@@ -33,7 +33,7 @@ cd /package
 gem install json_pure -v 2.5.1
 gem install /package/vendor/puppet-$PUPPET_VERSION.gem
 FACTER_RB=$(/opt/puppet-omnibus/embedded/bin/gem which facter)
-cd ${FACTER_RB::-3}
+cd ${FACTER_RB::-3} # strip .rb from facter path to get the folder
 patch -p9 < /tmp/facter.patch
 cd /package
 bundle install --local --path /tmp
