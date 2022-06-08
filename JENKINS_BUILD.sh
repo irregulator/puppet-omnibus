@@ -21,11 +21,16 @@ cp -r /package_source/* /package/
 
 # build puppet gem
 ln -s /package/puppet-git $PUPPET_BUILDPATH # versioning here because of hardy
-ls -la $PUPPET_BUILDPATH
+ls -la $PUPPET_BUILDPATH/
 cd $PUPPET_BUILDPATH
-git checkout -q $PUPPET_VERSION
+#git checkout -q $PUPPET_VERSION
+git init
+git config --global user.email "you@example.com"
+git add . ; git commit -m "sad"
+git tag $PUPPET_VERSION -m "Something"
+echo "Puppet version: $PUPPET_VERSION"
 rake package:bootstrap -q
-rake package:gem -q
+rake package:gem 
 mv pkg/puppet-$PUPPET_VERSION.gem /package/vendor/
 
 # build omnibus package

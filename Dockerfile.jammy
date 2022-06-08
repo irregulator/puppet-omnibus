@@ -1,4 +1,4 @@
-FROM docker-dev.yelpcorp.com/jammy_yelp:latest
+FROM registry.internal.exoscale.ch/exoscale/ubuntu:jammy
 
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get --yes --force-yes install \

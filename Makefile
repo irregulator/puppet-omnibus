@@ -1,8 +1,8 @@
-PUPPET_GIT    := $(or ${upstream_puppet_git},"https://github.com/Yelp/puppet.git")
-VERSION       := $(or ${puppet_version},"4.5.3")
+PUPPET_GIT    := $(or ${upstream_puppet_git},"https://github.com/exoscale/pkg-puppet")
+VERSION       := $(or ${puppet_version},"3.8.5")
 ITERATION     := $(or ${puppet_vendor_version},y7)
 PACKAGE_NAME  := "puppet-omnibus"
-PKG_ITERATION := yelp-1
+PKG_ITERATION := exo1
 
 .PHONY: dist docker itest package clean
 
@@ -28,14 +28,21 @@ puppet_git:
 		git clone $(PUPPET_GIT) puppet-git;                \
 	fi
 
+puppet_exo:
+	[ -d puppet-git ] && rm -rf puppet-git 
+	wget -c https://github.com/exoscale/pkg-puppet/raw/focal/puppet_3.8.5.orig.tar.gz
+	mkdir puppet-git
+	tar -xf puppet_3.8.5.orig.tar.gz --strip-components=1 -C puppet-git
+	sed -i "s/packaging_url.*/packaging_url: \'https:\/\/github.com\/puppetlabs\/packaging.git --branch=0.99.30'/" puppet-git/ext/build_defaults.yaml
+
 docker: require_os
 	flock /tmp/puppet_omnibus_$(OS)_docker_build.lock \
 	docker build -f Dockerfile.$(OS) -t package_puppet_omnibus_$(OS) .
 
-package: require_os dist puppet_git docker
+package: require_os dist puppet_exo docker
 	docker run \
 	  -e PKG_ITERATION=$(PKG_ITERATION) \
-	  -e PUPPET_VERSION=$(VERSION).$(ITERATION) \
+	  -e PUPPET_VERSION=$(VERSION) \
 	  -e PUPPET_BASE=$(VERSION) \
 	  -e HOME=/package \
 	  -e EXT_UID=`id -u` \
