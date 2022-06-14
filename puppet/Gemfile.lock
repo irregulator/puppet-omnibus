@@ -821,7 +821,7 @@ GEM
       rspec-support (~> 3.5.0)
     rspec-support (3.5.0)
     ruby-augeas (0.4.1)
-    ruby-shadow (2.2.0)
+    ruby-shadow (2.5.0)
     sensu-plugin (1.2.0)
       json
       mixlib-cli (>= 1.1.0)
@@ -861,7 +861,7 @@ DEPENDENCIES
   retries (= 0.0.5)
   rgen (= 0.6.6)
   ruby-augeas (= 0.4.1)
-  ruby-shadow (= 2.2.0)
+  ruby-shadow (= 2.5.0)
   sensu-plugin (= 1.2.0)
   serverspec (= 2.36.0)
   unicorn (= 4.9.0)

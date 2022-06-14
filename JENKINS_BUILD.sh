@@ -29,7 +29,7 @@ git config --global user.email "you@example.com"
 git add . ; git commit -m "sad"
 git tag $PUPPET_VERSION -m "Something"
 echo "Puppet version: $PUPPET_VERSION"
-rake package:bootstrap -q
+rake package:bootstrap
 rake package:gem 
 mv pkg/puppet-$PUPPET_VERSION.gem /package/vendor/
 
@@ -43,6 +43,7 @@ patch -p9 < /tmp/facter.patch
 cd /package
 bundle install --local --path /tmp
 FPM_CACHE_DIR=/package/vendor bundle exec fpm-cook clean
+sed -i '/require "digest"/a require "zlib"' /tmp/ruby/2.7.0/gems/fpm-1.11.0/lib/fpm/package/deb.rb
 FPM_CACHE_DIR=/package/vendor bundle exec fpm-cook package recipe.rb
 echo "Copying package to the dist folder"
 cp -v pkg/* /package_dest/

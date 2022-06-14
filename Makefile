@@ -28,12 +28,21 @@ puppet_git:
 		git clone $(PUPPET_GIT) puppet-git;                \
 	fi
 
+#puppet_exo:
+#	[ -d puppet-git ] && rm -rf puppet-git 
+#	wget -c https://github.com/exoscale/pkg-puppet/raw/focal/puppet_3.8.5.orig.tar.gz
+#	mkdir puppet-git
+#	tar -xf puppet_3.8.5.orig.tar.gz --strip-components=1 -C puppet-git
+#	sed -i "s/packaging_url.*/packaging_url: \'https:\/\/github.com\/puppetlabs\/packaging.git --branch=0.99.30'/" puppet-git/ext/build_defaults.yaml
+
 puppet_exo:
-	[ -d puppet-git ] && rm -rf puppet-git 
-	wget -c https://github.com/exoscale/pkg-puppet/raw/focal/puppet_3.8.5.orig.tar.gz
+	[ -d puppet-git ] && rm -rf puppet-git || true
+	[ -d pkg-puppet ] && rm -rf pkg-puppet || true
+	git clone https://github.com/exoscale/pkg-puppet --branch=focal --depth=1
 	mkdir puppet-git
-	tar -xf puppet_3.8.5.orig.tar.gz --strip-components=1 -C puppet-git
+	tar -xf pkg-puppet/puppet_3.8.5.orig.tar.gz --strip-components=1 -C puppet-git
 	sed -i "s/packaging_url.*/packaging_url: \'https:\/\/github.com\/puppetlabs\/packaging.git --branch=0.99.30'/" puppet-git/ext/build_defaults.yaml
+	cd puppet-git ; for i in $$(ls -1 ../pkg-puppet/debian/patches | grep -v series) ; do patch -p1 < ../pkg-puppet/debian/patches/$$i ; done
 
 docker: require_os
 	flock /tmp/puppet_omnibus_$(OS)_docker_build.lock \
