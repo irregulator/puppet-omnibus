@@ -28,7 +28,7 @@ class PuppetOmnibus < FPM::Cookery::Recipe
 
   omnibus_package true
   omnibus_dir     "/opt/#{name}"
-  omnibus_recipes 'libaugeas', 'puppet', 'nginx'
+  omnibus_recipes 'libaugeas', 'puppet'
 
   conflicts(*%w{puppet puppet-common hiera yelp-hiera facter puppetmaster
                 puppetmaster-passenger puppetmaster-common})
