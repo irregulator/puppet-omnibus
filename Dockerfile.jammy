@@ -29,18 +29,26 @@ ADD vendor/ruby-build-20211203.tar.gz /tmp
 # on in jammy's release.
 
 
-RUN wget https://mirrors.edge.kernel.org/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1l-1ubuntu1_amd64.deb
-RUN wget https://mirrors.edge.kernel.org/ubuntu/pool/main/o/openssl/libssl-dev_1.1.1l-1ubuntu1_amd64.deb
+#RUN wget https://mirrors.edge.kernel.org/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1l-1ubuntu1_amd64.deb
+#RUN wget https://mirrors.edge.kernel.org/ubuntu/pool/main/o/openssl/libssl-dev_1.1.1l-1ubuntu1_amd64.deb
 
-RUN dpkg -i libssl1.1_1.1.1l-1ubuntu1_amd64.deb
-RUN dpkg -i libssl-dev_1.1.1l-1ubuntu1_amd64.deb
+#RUN dpkg -i libssl1.1_1.1.1l-1ubuntu1_amd64.deb
+#RUN dpkg -i libssl-dev_1.1.1l-1ubuntu1_amd64.deb
+
+RUN mkdir -p /opt/openssl1.1
+RUN mkdir -p /opt/sslbuild && cd /opt/sslbuild && \
+    wget https://www.openssl.org/source/openssl-1.1.1o.tar.gz && \
+    tar xf openssl-1.1.1o.tar.gz && \
+    cd openssl-1.1.1o && \
+    ./config --prefix=/opt/openssl1.1 shared && \
+    make && make install
 
 RUN mkdir -p /opt/puppet-omnibus/embedded && \
     export MAKE_OPTS="-j3 -s" && \
     export RUBY_CFLAGS=-Os && \
     export RUBY_BUILD_CACHE_PATH=/tmp && \
     export RUBY_CONFIGURE_OPTS="--without-gdbm --without-dbm \
-    --with-readline-dir=/usr/lib/x86_64-linux-gnu --with-openssl-dir=/usr/lib/x86_64-linux-gnu \
+    --with-readline-dir=/usr/lib/x86_64-linux-gnu --with-openssl-dir=/opt/openssl1.1 \
     --disable-install-doc --without-tcl --without-tk" && \
     /tmp/ruby-build-20211203/bin/ruby-build -p 2.7.5 /opt/puppet-omnibus/embedded
 
