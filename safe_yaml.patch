@@ -1,0 +1,12 @@
+--- /tmp/ruby/2.7.0/gems/safe_yaml-1.0.5/lib/safe_yaml.rb       2022-06-21 15:40:35.713386010 +0000
++++ /tmp/ruby/2.7.0/gems/safe_yaml-1.0.5/lib/safe_yaml.rb       2022-06-21 15:52:12.104318853 +0000
+@@ -3,7 +3,7 @@
+ # This needs to be defined up front in case any internal classes need to base
+ # their behavior off of this.
+ module SafeYAML
+-  YAML_ENGINE = defined?(YAML::ENGINE) ? YAML::ENGINE.yamler : "syck"
++  YAML_ENGINE = defined?(YAML::ENGINE) ? YAML::ENGINE.yamler : (defined?(Psych) && YAML == Psych ? "psych" : "syck")
+ end
+ 
+ require "set"
+

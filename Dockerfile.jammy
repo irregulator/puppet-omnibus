@@ -58,3 +58,4 @@ RUN /opt/puppet-omnibus/embedded/bin/gem install rubygems-update -v '<3' && \
     rm -rf /opt/puppet-omnibus/embedded/share/*
 
 ADD facter.patch /tmp
+ADD safe_yaml.patch /tmp

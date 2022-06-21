@@ -23,6 +23,7 @@ cp -r /package_source/* /package/
 ln -s /package/puppet-git $PUPPET_BUILDPATH # versioning here because of hardy
 ls -la $PUPPET_BUILDPATH/
 cd $PUPPET_BUILDPATH
+patch lib/puppet/vendor/safe_yaml/lib/safe_yaml.rb < /tmp/safe_yaml.patch
 #git checkout -q $PUPPET_VERSION
 git init
 git config --global user.email "you@example.com"

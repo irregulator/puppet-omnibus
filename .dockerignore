@@ -1,3 +1,4 @@
 *
 !facter.patch
+!safe_yaml.patch
 !vendor
