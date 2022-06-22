@@ -76,3 +76,6 @@ clean:
 
 itest_%:
 	OS=$* make itest
+
+jammy_package:
+	OS=jammy make package
