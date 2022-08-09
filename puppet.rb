@@ -58,5 +58,6 @@ class PuppetGem < FPM::Cookery::Recipe
 
     destdir('../etc').mkdir
     destdir('../etc').install workdir('puppet/unicorn.conf')
+    destdir('../etc').install workdir('puppet/puppet.conf')
   end
 end

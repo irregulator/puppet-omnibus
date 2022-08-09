@@ -90,6 +90,9 @@ for BIN in $BINS; do
   update-alternatives --install /usr/bin/$BIN $BIN $BIN_PATH/$BIN 100
 done
 
+mkdir -p /etc/puppet/
+cp /opt/puppet-omnibus/etc/puppet.conf /etc/puppet/
+
 exit 0
       __POSTINST
     end
