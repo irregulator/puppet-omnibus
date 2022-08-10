@@ -38,6 +38,7 @@ class PuppetOmnibus < FPM::Cookery::Recipe
   when 'trusty', 'xenial', 'bionic'
     depends 'libssl1.0.0'
   end
+  depends 'net-tools'
 
   def build
   end
