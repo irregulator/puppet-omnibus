@@ -43,7 +43,6 @@ class PuppetGem < FPM::Cookery::Recipe
     destdir('../bin').install workdir('puppet/puppet'), 'puppet'
     destdir('../bin').install workdir('shared/omnibus.bin'), 'facter'
     destdir('../bin').install workdir('shared/omnibus.bin'), 'hiera'
-    destdir('../bin').install workdir('puppet/unicorn'), 'unicorn'
 
     destdir('../var').mkdir
     destdir('../var/lib').mkdir
@@ -57,7 +56,6 @@ class PuppetGem < FPM::Cookery::Recipe
     destdir('../var/lib/puppetmaster/rack').install workdir('puppet/config.ru')
 
     destdir('../etc').mkdir
-    destdir('../etc').install workdir('puppet/unicorn.conf')
     destdir('../etc').install workdir('puppet/puppet.conf')
   end
 end
