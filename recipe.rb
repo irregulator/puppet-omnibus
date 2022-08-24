@@ -92,7 +92,7 @@ for BIN in $BINS; do
 done
 
 mkdir -p /etc/puppet/
-cp /opt/puppet-omnibus/etc/puppet.conf /etc/puppet/
+test -f /etc/puppet/puppet.conf || cp /opt/puppet-omnibus/etc/puppet.conf /etc/puppet/
 
 exit 0
       __POSTINST
